@@ -20,6 +20,18 @@ public class GlobalConfig {
     private static GlobalConfig instance = new GlobalConfig();
 
     /**
+     * This field will be used to check whether a user is
+     * holding a valid session.
+     */
+    private static boolean isSession;
+
+    /**
+     * This field denotes the currency type to be used in
+     * the transactions.
+     */
+    private static String currencyType;
+
+    /**
      * The constructor made private
      */
     private GlobalConfig() {
@@ -37,6 +49,40 @@ public class GlobalConfig {
     public static GlobalConfig getInstance() {
 	return instance;
 
+    }
+
+    /**
+     * This method will load initial settings of the
+     * application.
+     */
+    public void loadInitialSettings() {
+
+    }
+
+    /**
+     * The getter method for isSession field.
+     * 
+     * @return session in the form of boolean.
+     */
+    public static boolean isSession() {
+	return isSession;
+    }
+
+    /**
+     * The setter method for isSession field.
+     * 
+     * @param isSession
+     */
+    public static void setSession(boolean isSession) {
+	GlobalConfig.isSession = isSession;
+    }
+
+    public static String getCurrencyType() {
+	return currencyType;
+    }
+
+    public static void setCurrencyType(String currencyType) {
+	GlobalConfig.currencyType = currencyType;
     }
 
 }
