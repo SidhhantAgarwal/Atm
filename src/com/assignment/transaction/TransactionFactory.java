@@ -2,7 +2,7 @@ package com.assignment.transaction;
 
 public class TransactionFactory {
 
-    public TransactionHandler getTransaction(String s) {
+    public ITransactionHandler getTransaction(String option) {
 
 	return null;
 
