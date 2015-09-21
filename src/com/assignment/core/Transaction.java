@@ -12,7 +12,7 @@ public class Transaction {
      */
     private static Account fromAccount;
 
-    private static Currency amount;
+    private static Amount amount;
 
     public static Account getToAccount() {
 	return toAccount;
@@ -30,11 +30,11 @@ public class Transaction {
 	Transaction.fromAccount = fromAccount;
     }
 
-    public static Currency getAmount() {
+    public static Amount getAmount() {
 	return amount;
     }
 
-    public static void setAmount(Currency amount) {
+    public static void setAmount(Amount amount) {
 	Transaction.amount = amount;
     }
 

@@ -1,5 +1,7 @@
 package com.assignment.main;
 
+import java.io.IOException;
+
 /**
  * The main launcher class for the application.This class
  * will contain the main method. The application will ask
@@ -17,10 +19,14 @@ public class Launcher {
      * launched.
      * 
      * @param args
+     * @throws IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	GlobalConfig config = GlobalConfig.getInstance();
 	config.loadInitialSettings();
+
+	MenuDisplay display = new MenuDisplay();
+	display.displayLogin();
 
     }
 

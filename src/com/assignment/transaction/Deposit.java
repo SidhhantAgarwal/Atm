@@ -2,7 +2,7 @@ package com.assignment.transaction;
 
 import com.assignment.core.User;
 
-public class Withdrawl implements ITransactionHandler {
+public class Deposit implements ITransactionHandler {
 
     @Override
     public void validate() {
