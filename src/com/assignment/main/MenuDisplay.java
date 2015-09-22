@@ -1,6 +1,6 @@
 package com.assignment.main;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import com.assignment.core.User;
@@ -15,6 +15,11 @@ public class MenuDisplay {
 
     private Scanner scanner;
 
+    public MenuDisplay() {
+
+	scanner = new Scanner(System.in);
+    }
+
     public void displayLogin() {
 	scanner = new Scanner(System.in);
 
@@ -25,17 +30,29 @@ public class MenuDisplay {
 
 	GlobalConfig config = GlobalConfig.getInstance();
 
-	ArrayList<User> users = config.getUsers();
+	HashMap<String, User> users = config.getUsers();
 
-	for (User user : users) {
-	    if (userId.equals(user.getUid())) {
+	if (!config.isSession()) {
+	    User user = users.get(userId);
+
+	    if (user != null) {
+
 		if (user.validate(pin)) {
 		    config.setSession(true);
+
 		    displayTransactionMenu(user);
+
 		} else {
 		    System.out.println("Invalid details re-enter");
 		    displayLogin();
+
 		}
+
+	    }
+
+	    else {
+		System.out.println("Invalid details re-enter");
+		displayLogin();
 	    }
 
 	}
@@ -43,15 +60,20 @@ public class MenuDisplay {
     }
 
     public void displayTransactionMenu(User user) {
-	System.out.println("Welcome" + userId);
-	System.out.println("1.Balance Inquiry");
-	System.out.println("2.Withdrawl");
-	System.out.println("3.Deposit");
-	System.out.println("Enter");
-	String option = scanner.nextLine();
-	TransactionFactory factory = new TransactionFactory();
-	ITransactionHandler handler = factory.getTransaction(option);
-	handler.completeTransaction(user);
+
+	GlobalConfig config = GlobalConfig.getInstance();
+
+	if (config.isSession()) {
+	    System.out.println("Welcome" + user.getUid());
+	    System.out.println("1.Balance Inquiry");
+	    System.out.println("2.Withdrawl");
+	    System.out.println("3.Deposit");
+	    System.out.println("Enter");
+	    String option = scanner.nextLine();
+	    TransactionFactory factory = new TransactionFactory();
+	    ITransactionHandler handler = factory.getTransaction(option);
+	    handler.completeTransaction(user);
+	}
 
     }
 

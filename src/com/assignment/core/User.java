@@ -5,38 +5,38 @@ import java.util.ArrayList;
 
 public class User {
 
-    private static String uid;
+    private String uid;
 
-    private static byte[] password;
+    private byte[] password;
 
-    private static String firstName;
+    private String firstName;
 
-    private static String lastName;
+    private String lastName;
 
-    private static ArrayList<Account> accounts;
+    private ArrayList<Account> accounts;
 
-    public static byte[] getPassword() {
+    public byte[] getPassword() {
 	return password;
     }
 
-    public static void setPassword(byte[] password) {
-	User.password = password;
+    public void setPassword(byte[] password) {
+	this.password = password;
     }
 
-    public static String getFirstName() {
+    public String getFirstName() {
 	return firstName;
     }
 
-    public static void setFirstName(String firstName) {
-	User.firstName = firstName;
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
     }
 
-    public static String getLastName() {
+    public String getLastName() {
 	return lastName;
     }
 
-    public static void setLastName(String lastName) {
-	User.lastName = lastName;
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
     }
 
     public String getUid() {
@@ -44,7 +44,7 @@ public class User {
     }
 
     public void setUid(String uid) {
-	User.uid = uid;
+	this.uid = uid;
     }
 
     public boolean validate(String pin) {
@@ -64,7 +64,18 @@ public class User {
     }
 
     public void setAccounts(ArrayList<Account> accounts) {
-	User.accounts = accounts;
+	this.accounts = accounts;
+
+    }
+
+    @Override
+    public Object clone() {
+
+	User user = new User();
+	user.setUid(this.getUid());
+	user.setPassword(this.getPassword());
+	user.setAccounts(this.getAccounts());
+	return user;
     }
 
 }

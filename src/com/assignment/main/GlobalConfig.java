@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashMap;
 
 import com.assignment.core.Account;
 import com.assignment.core.Amount;
@@ -52,7 +53,7 @@ public class GlobalConfig {
 
     }
 
-    private static ArrayList<User> users;
+    private HashMap<String, User> users;
 
     /**
      * 
@@ -77,37 +78,33 @@ public class GlobalConfig {
 	setCurrencyType(Currency.getInstance(GlobalConstants.CURRENCY_CODE));
 
 	try {
-	    users = new ArrayList<User>();
+	    users = new HashMap<String, User>();
 	    String userLine;
+	    String[] userData;
 	    BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
 	    while ((userLine = reader.readLine()) != null) {
-		String[] userData = userLine.split(",");
+		userData = userLine.split(",");
 		User user = new User();
 		user.setUid(userData[0]);
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		user.setPassword(md.digest(userData[1].getBytes()));
 
 		ArrayList<Account> accounts = new ArrayList<Account>();
-		ArrayList<Account> copy = new ArrayList<Account>();
 
 		for (int i = 2; i < userData.length; i++) {
-		    Account account = new Account();
-		    account.setNumber(userData[i]);
+
 		    Amount amount = new Amount();
 		    amount.setAmount(1000.00);
-
-		    account.setAvailableBalance(amount);
+		    Account account = new Account(userData[i], amount);
 		    accounts.add(account);
 
 		}
 
 		user.setAccounts(accounts);
-		users.add(user);
-		accounts.clear();
+		users.put(userData[0], user);
 
 	    }
 
-	    System.out.println(users.get(1).getUid());
 	} catch (FileNotFoundException | NoSuchAlgorithmException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -141,7 +138,7 @@ public class GlobalConfig {
 	GlobalConfig.currencyType = currencyType;
     }
 
-    public ArrayList<User> getUsers() {
+    public HashMap<String, User> getUsers() {
 	return users;
     }
 
